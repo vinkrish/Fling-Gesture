@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Fling</string>
+
+    <string name="is_it_odd">Is It Odd Number?</string>
+    <string name="is_it_even">Is It Even Number?</string>
+
+    <string name="correct_count">Correct answers count:\u0020</string>
+    <string name="wrong_count">Wrong answers count:\u0020</string>
+
+    <string name="info">Fling number towards odd or even section</string>
+
+    <string name="new_line"><![CDATA[Is It Odd Number? \n
+        drag & drop here.]]> </string>
+
+</resources>
