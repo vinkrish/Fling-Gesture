@@ -6,12 +6,58 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
+import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
+import android.widget.RelativeLayout;
 
 /**
  * Created by vinkrish on 10/03/16.
  */
 public class AnimationUtil {
+
+    public static class TrajectoryAnimation extends Animation {
+        final int targetX;
+        final int targetY;
+        final float targetRotation;
+        View view;
+        int startX;
+        int startY;
+        float startRotation;
+
+        public TrajectoryAnimation(View view, int targetX, int targetY, float targetRotation, int startX, int startY, float startRotation) {
+            this.view = view;
+            this.targetX = targetX;
+            this.targetY = targetY;
+            this.targetRotation = targetRotation;
+            this.startX = startX;
+            this.startY = startY;
+            this.startRotation = startRotation;
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            int newX = (int) (startX + ((targetX - startX) * interpolatedTime));
+            int newY = (int) (startY + ((targetY - startY) * interpolatedTime));
+            ((RelativeLayout.LayoutParams) view.getLayoutParams()).leftMargin = newX;
+            ((RelativeLayout.LayoutParams) view.getLayoutParams()).topMargin = newY;
+            ((RelativeLayout.LayoutParams) view.getLayoutParams()).rightMargin = -2000;
+            ((RelativeLayout.LayoutParams) view.getLayoutParams()).bottomMargin = -2000;
+
+            float newRotation = startRotation - ((startRotation - targetRotation) * interpolatedTime);
+            view.setRotation(newRotation);
+            view.requestLayout();
+        }
+
+        @Override
+        public void initialize(int width, int height, int parentWidth, int parentHeight) {
+            super.initialize(width, height, parentWidth, parentHeight);
+        }
+
+        @Override
+        public boolean willChangeBounds() {
+            return true;
+        }
+    }
 
     public static void alphaTranslate(View view, Context context) {
         view.setVisibility(View.VISIBLE);
